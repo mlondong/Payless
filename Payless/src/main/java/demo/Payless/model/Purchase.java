@@ -39,17 +39,17 @@ public class Purchase {
 
 
 	/*MAPEO de PRODUCT CON TABLA INTERMEDIA*/
-	/*@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinTable(
 				name="PURCHASE_PRODUCT" , 
 				joinColumns=@JoinColumn(name="PURCHASE_ID"),
 				inverseJoinColumns=@JoinColumn(name="PRODUCT_ID") 
 			  )
-	private Collection<Product> products =new ArrayList<Product>();;
+	private Collection<Product> products;
 
 
 	//private Collection<Product> products =new ArrayList<Product>();;
-	 */
+	 
 
 
 
@@ -62,6 +62,7 @@ public class Purchase {
 	public Purchase(){	}
 
 	public Purchase(Date date, long numInv){
+		products =new ArrayList<Product>();;
 		this.dateCreation=date;
 		this.numInvoice=numInv;
 	}
@@ -71,23 +72,23 @@ public class Purchase {
 		
 	//METODOS OPERACIONALES
 	public void addProduct(Product p){
-		//this.products.add(p);
+		this.products.add(p);
 	}
 
 	public void removeProduct(Product p){
-		//this.products.remove(p);
+		this.products.remove(p);
 	}
 
 
 	/***************************************************************************************************************************************/	
 	//SETTER AND GETTERS
-	//public Collection<Product> getProducts() {
-	//	return products;
-	//}
+	public Collection<Product> getProducts() {
+		return products;
+	}
 
-	//	public void setProducts(Collection<Product> products) {
-	//	this.products = products;
-	//	}
+	public void setProducts(Collection<Product> products) {
+		this.products = products;
+	}
 
 
 	public long getId() {
