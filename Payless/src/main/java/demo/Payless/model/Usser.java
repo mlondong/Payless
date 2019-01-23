@@ -22,8 +22,8 @@ public abstract class Usser {
 
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="ID",nullable=false,updatable=false)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@Column(name="USER_ID",nullable=false,updatable=false)
 	private long id;
 
 	@Column(name="NAME",nullable=false,updatable=true)
@@ -44,6 +44,14 @@ public abstract class Usser {
 	}
 	
 	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}

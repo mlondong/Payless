@@ -38,6 +38,30 @@
 		<mapping class="demo.Payless.model.Usser"/>
 		<mapping class="demo.Payless.model.Consumer"/>
 		<mapping class="demo.Payless.model.Trader"/>
+		<mapping class="demo.Payless.model.Purchase"/>
+		
+			
+		
+		<!--  
+		<mapping class="demo.Payless.test.Test2"/>
+		<mapping class="demo.Payless.model.Product"/>
+		<mapping class="demo.Payless.model.MeatProduct"/>
+		<mapping class="demo.Payless.model.MilkProduct"/>
+		<mapping class="demo.Payless.model.CareProduct"/>
+	
+		<mapping class="demo.Payless.model.Invoice"/>
+		
+	
+		
+		-->
+		
+		
+		
+		
+		
+		
+		
+		
 	
 
 	

@@ -80,6 +80,7 @@ public class AbstractDAO {
 		}
 		finally
 		{
+			System.out.println("finalll problemm...." );
 			dummy.terminaOperacion();
 		}
 
