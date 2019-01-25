@@ -36,6 +36,7 @@ public abstract class Usser {
 	private boolean state;
 	
 	
+	
 	public Usser(){}
 	
 	public Usser(String _name, String _pass){
@@ -43,6 +44,18 @@ public abstract class Usser {
 		this.password=_pass;
 	}
 	
+	
+	
+	
+	
+	
+	/*METODOS OPERACIONALES*/
+	
+	
+	
+	
+	
+	/*METODOS SETTER AND GETTER*/
 	
 	public long getId() {
 		return id;

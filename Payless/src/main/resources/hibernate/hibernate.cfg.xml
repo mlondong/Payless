@@ -45,11 +45,11 @@
 		<mapping class="demo.Payless.model.MilkProduct"/>
 		<mapping class="demo.Payless.model.CareProduct"/>
 		
+		<mapping class="demo.Payless.model.Invoice"/>
 		
 		<!--  
 		<mapping class="demo.Payless.test.Test2"/>
 		
-		<mapping class="demo.Payless.model.Invoice"/>
 		
 	
 		

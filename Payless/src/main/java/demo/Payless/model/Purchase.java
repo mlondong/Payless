@@ -48,11 +48,6 @@ public class Purchase {
 	private Collection<Product> products;
 
 
-	//private Collection<Product> products =new ArrayList<Product>();;
-	 
-
-
-
 	//@OneToOne(fetch = FetchType.LAZY)
 	//private DetailPurchase detailPurchase;
 
