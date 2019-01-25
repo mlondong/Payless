@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 public class Invoice {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="INVOICE_ID",nullable=false, unique=true )
 	private long id;
 

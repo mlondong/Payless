@@ -32,10 +32,10 @@ public class Test {
 		//testConsumerAndPurchase();
 
 		
-		//testConsumerCircuit();
+		testConsumerCircuit();
 		//testInvoice();
 		//testProduct();
-		testTreader();
+		//testTreader();
 	}
 
 

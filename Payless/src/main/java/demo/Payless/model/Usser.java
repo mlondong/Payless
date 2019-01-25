@@ -22,7 +22,7 @@ public abstract class Usser {
 
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="USER_ID",nullable=false,updatable=false)
 	private long id;
 
