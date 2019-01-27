@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.spi.PersistenceProvider;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -188,19 +189,20 @@ public class Test {
 
 	public static void testpersistenceJPA(){
 		/* Create EntityManagerFactory */
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa/MyPersistenceUnit");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("CRM");
 		
+		/*
 		/*se crea el objeto a persistir*/
-		Consumer c = new Consumer("mouse2", "11111", 1000, "MauxxxJPAA", "JPA");
+	/*	Consumer c = new Consumer("mouse2", "11111", 1000, "MauxxxJPAA", "JPA");
 		
 		/* Create EntityManager habre la transaccion  hace comit y cierra*/
-		EntityManager em = emf.createEntityManager();
+	/*	EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(c);
 		em.getTransaction().commit();
 		
 		Consumer c2 = em.find(Consumer.class, 1);
-		System.out.println("Employee after removal :- " + c2);
+		System.out.println("Employee after removal :- " + c2);*/
 		
 	}
 

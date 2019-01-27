@@ -1,12 +1,20 @@
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.2"
-    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">   
+   
     <!-- Define persistence unit --> 
-
     <!-- If developers select the RESOURCE_LOCAL, then the transaction will be managed by the JPA Provider Implementation in use. 
     If JTA is specified, then the transactions will be managed by the Application Server. -->
-    <persistence-unit name="MyPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+    
+    
+    <persistence-unit name="CRM" transaction-type="RESOURCE_LOCAL">
+		<description>Persistence for JPA</description>
+    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+	
+		<!-- Proveedor    org.hibernate.ejb.HibernatePersistence     org.hibernate.jpa.HibernatePersistenceProvider -->
+		<!--<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
         
         <!-- Entity Manager Class Name -->
         <class>demo.Payless.model.Usser</class>
@@ -51,15 +59,7 @@
 			<property name="hibernate.show_sql" value="true"></property>
 			<property name="hibernate.format_sql" value="true"></property>
 			<property name="use_sql_comments" value="true"></property>
-      
-      	
-      
         </properties>
-        
-        
-        
-        
-        
         
     </persistence-unit>
 </persistence>
