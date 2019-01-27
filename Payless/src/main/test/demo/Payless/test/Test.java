@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -28,11 +32,14 @@ public class Test {
 	public static void main(String[] arg){
 		//testDB();
 		//testEntity();
-		//testpersistence();
+	
+		//testpersistenceHibernate();
+		testpersistenceJPA();
+		
 		//testConsumerAndPurchase();
 
 		
-		testConsumerCircuit();
+		//testConsumerCircuit();
 		//testInvoice();
 		//testProduct();
 		//testTreader();
@@ -179,8 +186,28 @@ public class Test {
 
 
 
+	public static void testpersistenceJPA(){
+		/* Create EntityManagerFactory */
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa/MyPersistenceUnit");
+		
+		/*se crea el objeto a persistir*/
+		Consumer c = new Consumer("mouse2", "11111", 1000, "MauxxxJPAA", "JPA");
+		
+		/* Create EntityManager habre la transaccion  hace comit y cierra*/
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		em.persist(c);
+		em.getTransaction().commit();
+		
+		Consumer c2 = em.find(Consumer.class, 1);
+		System.out.println("Employee after removal :- " + c2);
+		
+	}
 
-	public static void testpersistence(){
+	
+	
+
+	public static void testpersistenceHibernate(){
 		SessionFactory factory;
 		factory = new Configuration()
 				.configure("hibernate/hibernate.cfg.xml")
