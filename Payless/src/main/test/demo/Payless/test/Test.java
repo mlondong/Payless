@@ -26,6 +26,7 @@ import demo.Payless.model.MilkProduct;
 import demo.Payless.model.Product;
 import demo.Payless.model.Purchase;
 import demo.Payless.model.Trader;
+import demo.Payless.model.Usser;
 
 public class Test {
 
@@ -188,21 +189,22 @@ public class Test {
 
 
 	public static void testpersistenceJPA(){
-		/* Create EntityManagerFactory */
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("CRM");
+		/* Create EntityManagerFactory hace uso del archivo persistence.xml en src/main/resources/meta-inf*/
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA");
 		
 		/*
 		/*se crea el objeto a persistir*/
-	/*	Consumer c = new Consumer("mouse2", "11111", 1000, "MauxxxJPAA", "JPA");
+		//Consumer c = new Consumer("JPA", "11111", 1000, "JPAA", "JPA2");
+		MilkProduct c =  new MilkProduct("MP23", "Leche Entera", "Celema", 100, 50);
 		
 		/* Create EntityManager habre la transaccion  hace comit y cierra*/
-	/*	EntityManager em = emf.createEntityManager();
+		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(c);
 		em.getTransaction().commit();
 		
-		Consumer c2 = em.find(Consumer.class, 1);
-		System.out.println("Employee after removal :- " + c2);*/
+		//c = em.find(Consumer.class, new Long(2));
+		//System.out.println("consulta Employee :- " + c );
 		
 	}
 

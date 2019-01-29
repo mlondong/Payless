@@ -39,7 +39,7 @@ public class Trader extends Usser {
 	
 	
 	
-	
+	public Trader(){}
 	
 	public Trader(String _name, String _pass, long _cuit){
 		super(_name, _pass);

@@ -1,65 +1,66 @@
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
-             version="2.1">   
-   
-    <!-- Define persistence unit --> 
-    <!-- If developers select the RESOURCE_LOCAL, then the transaction will be managed by the JPA Provider Implementation in use. 
-    If JTA is specified, then the transactions will be managed by the Application Server. -->
-    
-    
-    <persistence-unit name="CRM" transaction-type="RESOURCE_LOCAL">
+	version="2.1">
+
+	<!-- Define persistence unit -->
+	<!-- If developers select the RESOURCE_LOCAL, then the transaction will 
+		be managed by the JPA Provider Implementation in use. If JTA is specified, 
+		then the transactions will be managed by the Application Server. -->
+
+
+	<persistence-unit name="JPA" transaction-type="RESOURCE_LOCAL">
 		<description>Persistence for JPA</description>
-    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-	
-		<!-- Proveedor    org.hibernate.ejb.HibernatePersistence     org.hibernate.jpa.HibernatePersistenceProvider -->
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+		<!-- Proveedor org.hibernate.ejb.HibernatePersistence org.hibernate.jpa.HibernatePersistenceProvider -->
 		<!--<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
-        
-        <!-- Entity Manager Class Name -->
-        <class>demo.Payless.model.Usser</class>
-        <class>demo.Payless.model.Consumer</class>
-        <class>demo.Payless.model.Trader</class>
-        <class>demo.Payless.model.Purchase</class>
-        <class>demo.Payless.model.Product</class>
-        <class>demo.Payless.model.MeatProduct</class>
-        <class>demo.Payless.model.MilkProduct</class>
-        <class>demo.Payless.model.CareProduct</class>
-        <class>demo.Payless.model.Invoice</class>
-        
-		<!--  
-		<mapping class="demo.Payless.test.Test2"/>
-		-->
+
+		<!-- Entity Manager Class Name -->
+		<class>demo.Payless.model.Usser</class>
+		<class>demo.Payless.model.Consumer</class>
+		<class>demo.Payless.model.Trader</class>
+		<class>demo.Payless.model.Purchase</class>
+		<class>demo.Payless.model.Product</class>
+		<class>demo.Payless.model.MeatProduct</class>
+		<class>demo.Payless.model.MilkProduct</class>
+		<class>demo.Payless.model.CareProduct</class>
+		<class>demo.Payless.model.Invoice</class>
+
+		<!-- <mapping class="demo.Payless.test.Test2"/> -->
 
 
-		<!-- CACHE PARA ENTITYS ES NECESARIO ENABLE_SELECTIVE – To cache only the entities annotated with @Cacheable or @Cacheable(true) -->
+		<!-- CACHE PARA ENTITYS ES NECESARIO ENABLE_SELECTIVE – To cache only the 
+			entities annotated with @Cacheable or @Cacheable(true) -->
 		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
-		
-		
+
+
 		<!-- Define the pessimistic lock timeout and the query timeout in milliseconds. -->
 		<properties>
-            <property name="javax.persistence.lock.timeout" value="100"/>
-            <property name="javax.persistence.query.timeout" value="100"/>
-      
-      		<!-- Database connection settings -->
+			<property name="javax.persistence.lock.timeout" value="100" />
+			<property name="javax.persistence.query.timeout" value="100" />
+
+			<!-- Database connection settings -->
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"></property>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/dbpayless?useSSL=false"></property>
+			<property name="javax.persistence.jdbc.url"	value="jdbc:mysql://localhost:3306/dbpayless?useSSL=false"></property>
 			<property name="javax.persistence.jdbc.user" value="payless"></property>
 			<property name="javax.persistence.jdbc.password" value="payless123"></property>
-      
-      		<property name="connection.pool_size" value="10"></property>
+
+			<property name="connection.pool_size" value="10"></property>
 
 
 			<!-- Dialecto de la base de datos -->
 			<property name="dialect" value="org.hibernate.dialect.MySQL5Dialect"></property>
 
 
-			<!-- ESTA LINEA PERMITE QUE SE CREE LA TABLA EN PRINCIPIO Y VAYA ACTUALIZANDO 	LA INFORMACION -->
+			<!-- ESTA LINEA PERMITE QUE SE CREE LA TABLA EN PRINCIPIO Y VAYA ACTUALIZANDO 
+				LA INFORMACION -->
 			<property name="hibernate.hbm2ddl.auto" value="update"></property>
 			<property name="hibernate.show_sql" value="true"></property>
 			<property name="hibernate.format_sql" value="true"></property>
 			<property name="use_sql_comments" value="true"></property>
-        </properties>
-        
-    </persistence-unit>
+		</properties>
+
+	</persistence-unit>
 </persistence>
