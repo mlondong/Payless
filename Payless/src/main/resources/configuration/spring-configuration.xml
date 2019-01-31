@@ -21,55 +21,66 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 
-	<context:component-scan base-package="demo.Payless" />
 
 
 	<!-- Configuration Datasource Spring  -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<!--  <property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/dbpayless?useSSL=false" />
 		<property name="username" value="payless" />
 		<property name="password" value="payless123" />
 	</bean>
 
-
+	<!--  
 	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
-
+	<property name="jpaDialect" ref="jpaDialect" />
+	
+	-->
 
 
 	<!-- Configure the entity manager factory bean -->
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<!--  <property name="persistenceUnitName" value="jcgPersistence" /> -->
 		<property name="dataSource" ref="dataSource" />
 		<property name="persistenceXmlLocation" value="META-INF/persistence.xml" />
-		<!-- <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" /> -->
-		<property name="jpaDialect" ref="jpaDialect" />
+		<property name="jpaVendorAdapter">
+           <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+           		<property name="generateDdl" value="true"/>
+				<property name="showSql" value="true"/>
+	       </bean>
+       </property>
 		<property name="jpaProperties">
 			<props><!-- Set JPA properties -->
-				<prop key="hibernate.hbm2ddl.auto">none</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 			</props>
 		</property>
 	</bean>
 
 
-	<!-- Configure the entity manager factory bean -->
-	<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>
-
 
 	<!-- Configure the transaction manager bean -->
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
-		<property name="dataSource" ref="dataSource" />
-		<property name="jpaDialect" ref="jpaDialect" />
+		<!--  <property name="dataSource" ref="dataSource" />
+		<property name="jpaDialect" ref="jpaDialect" /> -->
 	</bean>
 
-	<tx:annotation-driven transaction-manager="transactionManager" />
-	<context:component-scan base-package="demo.Payless.model" />
+	<!--  <context:component-scan base-package="demo.Payless" />
+	<tx:annotation-driven transaction-manager="hibernateTransactionManager"/> -->
+	<!--  <tx:annotation-driven transaction-manager="transactionManager" /> -->
 
-	<!-- Llamado de los beans-->
+
+	<!-- ENABLE JPA REPOSITORIES -->
+	<context:component-scan base-package="demo.Payless.repositories" />
+	<jpa:repositories base-package="demo.Payless.repositories" />
+	<tx:annotation-driven/>
+	<!--	<context:annotation-config />  -->
+
+
+	<!-- Llamado de los beans -->
 	<bean id="mainBean" class="demo.Payless.test.TestXMLApplicationContext" />
 
 </beans>

@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import demo.Payless.model.Consumer;
 import demo.Payless.model.Trader;
+import demo.Payless.model.Usser;
+import demo.Payless.repositories.ConsumerRepository;
+import demo.Payless.repositories.UserBaseRepository;
 import demo.Payless.repositories.UsserRepository;
 
 @Configuration
@@ -36,7 +39,7 @@ public class TestXMLApplicationContext {
 		try {
 
 
-			TestXMLApplicationContext s = (TestXMLApplicationContext) ctx.getBean("mainBean");
+			TestXMLApplicationContext s = (TestXMLApplicationContext)ctx.getBean("mainBean");
 			System.out.println("Add employees");
 			s.addUser();
 			System.out.println("Find all employees");
@@ -63,8 +66,8 @@ public class TestXMLApplicationContext {
 
 
 	public  void addUser(){
-		Consumer consumer3 = new Consumer("JPAXML", "1021707", 22222, "JPAXML", "JPAXML");
-		Trader trader1 = new Trader("sourise", "1234564", 132555  );
+		Usser consumer3 = new Consumer("JPA000", "0000", 22222, "3DIAS", "3DIAS");
+		Usser trader1 = new Trader("JPAJPA", "MEMUERO", 132555  );
 		repository.save(consumer3);
 		repository.save(trader1);
 	}
