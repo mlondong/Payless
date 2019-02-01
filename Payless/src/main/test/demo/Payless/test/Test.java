@@ -36,20 +36,20 @@ public class Test {
 	public static void main(String[] arg){
 		//testDB();
 		//testEntity();
-	
+
 		//testpersistenceHibernate();
 		//testpersistenceJPA();
-		
+
 		//testConsumerAndPurchase();
 
-		
+
 		//testConsumerCircuit();
 		//testInvoice();
 		//testProduct();
-		//testTreader();
 
-		testStockProduct();
-	
+		//testTreader();
+		//testStockProduct();
+		testTraderStockProduct();
 	}
 
 
@@ -62,15 +62,18 @@ public class Test {
 		invoice1.addProduct(new MeatProduct("MPJU123", "Carne de XXXX", "Angus", 50, 10, "Vaca", new Date() ));
 		invoice1.addProduct(new MilkProduct("MP23", "Leche XXX", "Celema", 100, 50 ));
 		trader1.addInvoice(invoice1);
-		AbstractDAO.almacenaEntidad(trader1);
+		AbstractDAO.almacenaEntidad(trader1);//test con hibernate.cfg
 
-	
+
 	}
-	
-	
+
+
 	public static void testConsumerCircuit(){
 		/*TESTDE CIRCUITO COMPLETO DE CONSUMER EN COMPRA Y CREACION*/
 		/*consumer con 1 compra y 3 productos*/
+		////test con hibernate.cfg
+
+
 		Consumer consumer1 = new Consumer("XMEN", "0000001", 111111, "PEdro", "Sanchez");
 		Purchase compra1 = new Purchase(new Date(),21563);
 		compra1.getProducts().add(new MeatProduct("MP1212", "Carne de Pollo", "Pollo", 50, 10, "Pollo", new Date()));
@@ -81,14 +84,14 @@ public class Test {
 
 		/*consumer con 2 commpras y 3  productos*/
 		Consumer consumer2 = new Consumer("mouse", "1234564", 10217047, "Mauricio", "londono");
-		
+
 		Purchase compra2 = new Purchase(new Date(),5555);
 		compra2.getProducts().add(new CareProduct("CPJU123", "Jabon de bano", "Dove", 100, 50));
-		
+
 		Purchase compra3 = new Purchase(new Date(),54212);
 		compra3.getProducts().add(new CareProduct("CNIP00", "Champu", "Jhonsson", 100, 50));
 		compra3.getProducts().add(new MeatProduct("MPJU123", "Carne de vaca", "Angus", 50, 10, "Vaca", new Date() ));
-		
+
 		consumer2.getPurchase().add(compra2);
 		consumer2.getPurchase().add(compra3);
 		AbstractDAO.almacenaEntidad(consumer2);
@@ -108,22 +111,24 @@ public class Test {
 		compra4.getProducts().add(new MilkProduct("ABP23", "Leche Entera", "San Felix", 100, 50 ));
 		compra4.getProducts().add(new MilkProduct("OP23", "Leche Deslactosada", "Serenisima", 100, 50 ));
 		compra4.getProducts().add(new MilkProduct("OP523", "Leche Entera", "PortoBello", 100, 50 ));
-		
+
 		consumer3.getPurchase().add(compra4);
 		AbstractDAO.almacenaEntidad(consumer3);
 
-		
-		
+
+
 		Consumer consumer5 = new Consumer("Martica", "111112", 8566, "Martica", "Garcia");
 		Purchase compra5 = new Purchase(new Date(),4444);
 		consumer5.getPurchase().add(compra5);
 		AbstractDAO.almacenaEntidad(consumer5);
 
-	
+
 	} 
 
-	
+
 	public static void testInvoice(){
+
+		//test con hibernate.cfg
 
 		Invoice in = new Invoice();
 		in.setDateInvoice(new Date());
@@ -138,7 +143,9 @@ public class Test {
 	public static void testProduct(){
 
 		/*TEST ALMACENAMIENTO DE PRODUCTOS Y SUS TIPOS */
-		
+		//test con hibernate.cfg
+
+
 		MeatProduct mp1 = new MeatProduct("MPJU123", "Carne de vaca", "Angus", 50, 10, "Vaca", new Date() );
 		MilkProduct mp2 =  new MilkProduct("MP23", "Leche Entera", "Celema", 100, 50 );
 		MeatProduct mp3 = new MeatProduct("MPAA123", "Carne de vaca", "Angus", 50, 10, "Vaca", new Date() );
@@ -165,11 +172,11 @@ public class Test {
 
 	public static void testEntity(){
 		/*TESTDE HIBERNATE*/
-		//Consumer c = new Consumer("mouse", "1234564", 10217047, "Mauricio", "londono");
-		//AbstractDAO.almacenaEntidad(c);
+		Consumer c = new Consumer("mouse", "1234564", 10217047, "Mauricio", "londono");
+		AbstractDAO.almacenaEntidad(c);
 
-		//Trader t = new Trader("sourise", "1234564", new ArrayList<E>());
-		//AbstractDAO.almacenaEntidad(t);
+		Trader t = new Trader("sourise", "1234564",98888888);
+		AbstractDAO.almacenaEntidad(t);
 
 	}
 
@@ -196,25 +203,25 @@ public class Test {
 	public static void testpersistenceJPA(){
 		/* Create EntityManagerFactory hace uso del archivo persistence.xml en src/main/resources/meta-inf*/
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA");
-		
+
 		/*
 		/*se crea el objeto a persistir*/
 		//Consumer c = new Consumer("JPA", "11111", 1000, "JPAA", "JPA2");
 		MilkProduct c =  new MilkProduct("MP23", "Leche Entera", "Celema", 100, 50);
-		
+
 		/* Create EntityManager habre la transaccion  hace comit y cierra*/
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(c);
 		em.getTransaction().commit();
-		
+
 		//c = em.find(Consumer.class, new Long(2));
 		//System.out.println("consulta Employee :- " + c );
-		
+
 	}
 
-	
-	
+
+
 
 	public static void testpersistenceHibernate(){
 		SessionFactory factory;
@@ -242,18 +249,16 @@ public class Test {
 
 	}
 
-	
+
 	public static void testStockProduct(){
 		/* Create EntityManagerFactory hace uso del archivo persistence.xml en src/main/resources/meta-inf*/
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA");
-		
-	
 
-		
+
 		/* Create EntityManager habre la transaccion  hace comit y cierra*/
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		
+
 		//trae los productos
 		MeatProduct p1 = em.getReference(MeatProduct.class, 1L);
 		MeatProduct p2 = em.getReference(MeatProduct.class, 3L);
@@ -261,8 +266,8 @@ public class Test {
 		MeatProduct p4 = em.getReference(MeatProduct.class, 5L);
 		MilkProduct p5 = em.getReference(MilkProduct.class, 7L);
 		MilkProduct p6 = em.getReference(MilkProduct.class, 2L);
-		
-		
+
+
 		Stock stock = new  Stock();
 		stock.setDateStock(new Date());
 		stock.getProducts().add(new StockProducts(stock, p1, 300));
@@ -271,24 +276,43 @@ public class Test {
 		stock.getProducts().add(new StockProducts(stock, p4, 30));
 		stock.getProducts().add(new StockProducts(stock, p5, 20));
 		stock.getProducts().add(new StockProducts(stock, p6, 10));
-		
-		
-		em.persist(stock);
 
-		
-		
-		
-		
-		
-		
+
+		em.persist(stock);
 		em.getTransaction().commit();
-		
+
 		//c = em.find(Consumer.class, new Long(2));
 		//System.out.println("consulta Employee :- " + c );
-	
+
 	}
-	
 
 
+	public static void testTraderStockProduct(){
+		/* Create EntityManagerFactory hace uso del archivo persistence.xml en src/main/resources/meta-inf*/
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA");
+
+		/* Create EntityManager habre la transaccion  hace comit y cierra*/
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		
+		Trader t = em.getReference(Trader.class, 2L);
+
+		MeatProduct p4 = em.getReference(MeatProduct.class, 5L);
+		MilkProduct p5 = em.getReference(MilkProduct.class, 7L);
+		MilkProduct p6 = em.getReference(MilkProduct.class, 2L);
+
+
+		Stock stock = new  Stock();
+		stock.setDateStock(new Date());
+		stock.setTrader(t);
+		stock.getProducts().add(new StockProducts(stock, p4, 300));
+		stock.getProducts().add(new StockProducts(stock, p5, 40));
+		stock.getProducts().add(new StockProducts(stock, p6, 50));
+
+		em.persist(stock);
+		em.getTransaction().commit();
+		em.close();
+
+	}
 
 }//fin clase

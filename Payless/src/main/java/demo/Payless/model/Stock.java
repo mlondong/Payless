@@ -8,13 +8,16 @@ import java.util.Iterator;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -45,7 +48,11 @@ public class Stock {
 			   orphanRemoval=true)
 	private Collection<StockProducts> products;
 	
-
+	@OneToOne(fetch = FetchType.LAZY,orphanRemoval=true,optional=false)
+    @JoinColumn(name = "USER_ID")	
+	private Trader trader;
+	
+	
 	
 	
 	public Stock(){
@@ -88,6 +95,18 @@ public class Stock {
 	public long getId() {
 		return id;
 	}
+
+	public Trader getTrader() {
+		return trader;
+	}
+
+
+
+	public void setTrader(Trader trader) {
+		this.trader = trader;
+	}
+
+
 
 	public void setId(long id) {
 		this.id = id;

@@ -10,7 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 
 @Entity
@@ -23,11 +25,6 @@ public class Trader extends Usser {
 	private int score;
 	
 	
-	//@ElementCollection
-	//private Collection<Address> address;
-	
-
-	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinTable(
 			    name="TRADER_INVOICE", 
@@ -35,6 +32,17 @@ public class Trader extends Usser {
 				inverseJoinColumns=@JoinColumn(name="INVOICE_ID")
 			    )
 	private Collection<Invoice> invoices;
+	
+
+	@OneToOne(mappedBy="trader",
+			fetch=FetchType.LAZY,
+			cascade=CascadeType.ALL)
+	private Stock stock;
+	
+	
+	//@ElementCollection
+	//private Collection<Address> address;
+
 	
 	
 	
@@ -72,9 +80,21 @@ public class Trader extends Usser {
 	
 	/*************************************************************************************************************************************/
 	/*metodos setter and getter*/
+	
+	
+	
+	
 	public long getCuit() {
 		return cuit;
 	}
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
+
 	public void setCuit(long cuit) {
 		this.cuit = cuit;
 	}
