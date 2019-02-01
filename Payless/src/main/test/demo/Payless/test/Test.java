@@ -25,6 +25,8 @@ import demo.Payless.model.MeatProduct;
 import demo.Payless.model.MilkProduct;
 import demo.Payless.model.Product;
 import demo.Payless.model.Purchase;
+import demo.Payless.model.Stock;
+import demo.Payless.model.StockProducts;
 import demo.Payless.model.Trader;
 import demo.Payless.model.Usser;
 
@@ -36,7 +38,7 @@ public class Test {
 		//testEntity();
 	
 		//testpersistenceHibernate();
-		testpersistenceJPA();
+		//testpersistenceJPA();
 		
 		//testConsumerAndPurchase();
 
@@ -45,6 +47,9 @@ public class Test {
 		//testInvoice();
 		//testProduct();
 		//testTreader();
+
+		testStockProduct();
+	
 	}
 
 
@@ -237,4 +242,53 @@ public class Test {
 
 	}
 
-}
+	
+	public static void testStockProduct(){
+		/* Create EntityManagerFactory hace uso del archivo persistence.xml en src/main/resources/meta-inf*/
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA");
+		
+	
+
+		
+		/* Create EntityManager habre la transaccion  hace comit y cierra*/
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		
+		//trae los productos
+		MeatProduct p1 = em.getReference(MeatProduct.class, 1L);
+		MeatProduct p2 = em.getReference(MeatProduct.class, 3L);
+		MeatProduct p3 = em.getReference(MeatProduct.class, 4L);
+		MeatProduct p4 = em.getReference(MeatProduct.class, 5L);
+		MilkProduct p5 = em.getReference(MilkProduct.class, 7L);
+		MilkProduct p6 = em.getReference(MilkProduct.class, 2L);
+		
+		
+		Stock stock = new  Stock();
+		stock.setDateStock(new Date());
+		stock.getProducts().add(new StockProducts(stock, p1, 300));
+		stock.getProducts().add(new StockProducts(stock, p2, 40));
+		stock.getProducts().add(new StockProducts(stock, p3, 50));
+		stock.getProducts().add(new StockProducts(stock, p4, 30));
+		stock.getProducts().add(new StockProducts(stock, p5, 20));
+		stock.getProducts().add(new StockProducts(stock, p6, 10));
+		
+		
+		em.persist(stock);
+
+		
+		
+		
+		
+		
+		
+		em.getTransaction().commit();
+		
+		//c = em.find(Consumer.class, new Long(2));
+		//System.out.println("consulta Employee :- " + c );
+	
+	}
+	
+
+
+
+}//fin clase

@@ -12,4 +12,14 @@ public class MilkProduct extends Product {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String toString() {
+		return "MilkProduct [  getId()=" + getId() + ", getCode()=" + getCode()
+				+ ", getDescription()=" + getDescription() + ", getName()=" + getName() + ", getQuantity()="
+				+ getQuantity() + ", getPriceUnit()=" + getPriceUnit() + "]";
+	}
+
+	
+	
+
 }

@@ -66,8 +66,8 @@ public class TestXMLApplicationContext {
 
 
 	public  void addUser(){
-		Usser consumer3 = new Consumer("JPA000", "0000", 22222, "3DIAS", "3DIAS");
-		Usser trader1 = new Trader("JPAJPA", "MEMUERO", 132555  );
+		Usser consumer3 = new Consumer("0000", "0000", 22222, "3DIAS", "3DIAS");
+		Usser trader1 = new Trader("11111", "8888", 132555  );
 		repository.save(consumer3);
 		repository.save(trader1);
 	}
