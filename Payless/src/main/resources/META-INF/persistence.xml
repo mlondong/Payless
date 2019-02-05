@@ -64,7 +64,14 @@
 			<property name="hibernate.show_sql" value="true"></property>
 			<property name="hibernate.format_sql" value="true"></property>
 			<property name="use_sql_comments" value="true"></property>
+			<property name="hibernate.enable_lazy_load_no_trans" value="true"/>
 		</properties>
+
+		    <!--OJO  Without the hibernate.enable_lazy_load_no_trans configuration property in place, 
+		    the invoices no serian traidos porque la collecion no hasido inicializada
+		    and the Persistence Context is already closed,
+		    along with the database connection that fetched the post entity. -->
+
 
 	</persistence-unit>
 </persistence>

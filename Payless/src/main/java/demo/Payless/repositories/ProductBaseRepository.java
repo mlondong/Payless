@@ -1,17 +1,16 @@
 package demo.Payless.repositories;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.Repository;
-import org.springframework.stereotype.Indexed;
 
+import demo.Payless.model.Product;
 import demo.Payless.model.Usser;
 
 @NoRepositoryBean
-public interface UserBaseRepository<T extends Usser> extends CrudRepository<T, Long> {
+public interface ProductBaseRepository<T extends Product> extends CrudRepository<T, Long> {
+
 
 	<S extends T> S save(S entity);
 
@@ -29,5 +28,4 @@ public interface UserBaseRepository<T extends Usser> extends CrudRepository<T, L
 
 	void delete(T entity);
 
-		
 }

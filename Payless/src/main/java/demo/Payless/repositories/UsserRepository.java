@@ -14,11 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import demo.Payless.model.Usser;
 
-
+@org.springframework.stereotype.Repository
 @Transactional
 public interface UsserRepository extends UserBaseRepository<Usser>{
-	List<Usser> findEmployeesById(int age);
-	List<Usser> findEmployeesByName(String name);
-	List<Usser> findEmployeesByState(boolean state);
-	/*Page<Usser> findEmployeesByAgeGreaterThan(int age, Pageable pageable);*/
+
+	/*Metodos comunes a Usser y sus herederos*/
+	Usser  findUsserById(long id);
+	List<Usser> findUsserByName(String name);
+	List<Usser> findUsserByState(boolean state);
+
+
 }

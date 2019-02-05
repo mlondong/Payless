@@ -22,66 +22,39 @@ public abstract class Product {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY) 
-	@Column(name="PRODUCT_ID",nullable=false)
+	@Column(name="PRODUCT_ID",nullable=false,unique=true)
 	private long id;
 
-	@Column(name="CODE",nullable=false)
+	@Column(name="CODE",nullable=false, unique=true)
 	private String code;
 
-	@Column(name="DESCRIPTION")
+	@Column(name="DESCRIPTION",nullable=false)
 	private String description;
 
-	@Column(name="NAME",nullable=false)
-	private String name;
+	@Column(name="PRODUCER",nullable=false)
+	private String producer;
 
-	@Column(name="QUANTITY",nullable=false)
-	private int quantity;
-
-	@Column(name="PRICE_PRODUCT",nullable=false)
+	@Column(name="PRICE_UNIT",nullable=false)
 	private float priceUnit;
 
 	@Column(name="STATE",nullable=false)
-	private boolean state; 
-
-/*	@OneToMany(mappedBy = "product",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true )
-	private List<StockProducts> stocks = new ArrayList<>();
-*/
-	//private Calification calification;
+	private boolean state=true; 
 
 
 	public Product(){}
 
 
-	public Product(String _code, String _desc, String _name, int _quantity , float _price){
+	public Product(String _code, String _desc, String _producer,  float _price){
 		this.code=_code;
 		this.description=_desc;
-		this.name=_name;
-		this.quantity=_quantity;
+		this.producer=_producer;
 		this.priceUnit=_price;
 
 	}
 
 
-
-	/***************************************************************************************************************************************/	
-	/*/*ANOTHER OPERATIONS METHODS*/
-
-
-
 	/***************************************************************************************************************************************/	
 	/*METODOS GETTER AND SETTER*/
-
-	
-/*	public List<StockProducts> getStocks() {
-		return stocks;
-	}
-
-
-	public void setStocks(List<StockProducts> stocks) {
-		this.stocks = stocks;
-	}*/
 
 
 	public long getId() {
@@ -104,19 +77,6 @@ public abstract class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
 
 	public float getPriceUnit() {
 		return priceUnit;
@@ -139,19 +99,14 @@ public abstract class Product {
 	}
 
 
-	
-	
-	
-	/*
-	public Calification getCalification() {
-		return calification;
-	}
-	public void setCalification(Calification calification) {
-		this.calification = calification;
+	public String getProducer() {
+		return producer;
 	}
 
-	 */
 
+	public void setProducer(String producer) {
+		this.producer = producer;
+	}
 
 
 }

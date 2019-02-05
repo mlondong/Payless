@@ -10,19 +10,19 @@ import javax.persistence.TemporalType;
 @Entity
 public class MeatProduct extends Product{
 
-	
-	@Column(name="ANIMAL_TYPE")
+	//esta columna podria ser u enum, hay que verlo
+	@Column(name="ANIMAL_TYPE",nullable=false)
 	private String typeAnimal;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name="DATE_EXPIRY")
+	@Column(name="DATE_EXPIRY",nullable=false)
 	private Date dateExpiry;
 
 	
 	public MeatProduct(){}
 
-	public MeatProduct(String _code, String _desc, String _name, int _quantity , float _price ,String typeAnimal, Date dateExpiry) {
-		super( _code, _desc,  _name,  _quantity ,  _price);
+	public MeatProduct(String _code, String _desc, String _name,  float _price ,String typeAnimal, Date dateExpiry) {
+		super( _code, _desc,  _name,    _price);
 		this.typeAnimal = typeAnimal;
 		this.dateExpiry = dateExpiry;
 	}

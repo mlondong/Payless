@@ -40,6 +40,7 @@ public abstract class Usser {
 	public Usser(){}
 	
 	public Usser(String _name, String _pass){
+		this.state=true;
 		this.name=_name;
 		this.password=_pass;
 	}

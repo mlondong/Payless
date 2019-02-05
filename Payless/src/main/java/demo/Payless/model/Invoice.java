@@ -8,6 +8,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,20 +19,34 @@ import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * @author root
+ * ENTIDAD INVOICE DENTRO DE INVOICE HAY MUCHOS PRODUCTOS
+ * UN TRADER PUEDE TENER MUCHOS INVOICES
+ * INVOICE MAPEA A MUCHOS PRODUCTS CON UNA TABLA INTERMEDIA INVOICE_PRODUCTS
+ * A SU VEZ INVOICE ES MAEADO POR TRADER CON UNA TUN TRADER TIENE MUCHOS NVOICES
+ * TABLA INTERNEDIA TRADER_INVOICES
+ * 
+ */
+
 @Entity
 public class Invoice {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="INVOICE_ID",nullable=false, unique=true )
+	@Column(name="INVOICE_ID",nullable=false, unique=true)
 	private long id;
 
+	
+	
 	@Temporal(TemporalType.DATE)
-	@Column(name="DATE_INVOICE",nullable=false, unique=true )
+	@Column(name="DATE_INVOICE",nullable=false )
 	private Date dateInvoice;
 
+	
+	
 	/*MAPEO POR JOIN TABLE ,CREANDO TABLA INTERMMEDA DE IDS DE AMBAS TABAS TABLA GENERADA INVOICE_PRODUCTS*/
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true,fetch=FetchType.LAZY)
 	@JoinTable(
 				name = "INVOICE_PRODUCTS",
 				joinColumns = @JoinColumn(name = "INVOICE_ID"),
@@ -39,19 +54,14 @@ public class Invoice {
 			   )
 	private Collection<Product> products;
 
-	@Column(name="TOTAL_INVOICE")
-	private float totalInvoice;
-
-
-
-
-
-
+	
+	
 	public Invoice(){
 		this.products = new ArrayList<Product>();
 	}
 
 
+	/****************************************************************************************************************************/
 	
 	/*Metodos para adicionar o remover products de un invoice*/
 	public void addProduct(Product product) {
@@ -89,17 +99,7 @@ public class Invoice {
 	}
 
 
-	public float getTotalInvoice() {
-		return totalInvoice;
-	}
-
-	public void setTotalInvoice(float totalInvoice) {
-		this.totalInvoice = totalInvoice;
-	}
-
-
-
-
+	
 
 }
 

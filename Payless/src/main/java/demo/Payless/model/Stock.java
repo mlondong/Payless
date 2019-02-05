@@ -39,7 +39,7 @@ public class Stock {
 	
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name="DATE_STOCK")
+	@Column(name="DATE_STOCK", nullable=false)
 	private Date dateStock;
 	
 	
@@ -48,15 +48,19 @@ public class Stock {
 			   orphanRemoval=true)
 	private Collection<StockProducts> products;
 	
+	
 	@OneToOne(fetch = FetchType.LAZY,orphanRemoval=true,optional=false)
-    @JoinColumn(name = "USER_ID")	
+	@JoinColumn(name = "USER_ID")	
 	private Trader trader;
+	
+
 	
 	
 	
 	
 	public Stock(){
-		products = new ArrayList<StockProducts>();
+		this.products = new ArrayList<StockProducts>();
+		this.dateStock= new Date();
 	}
 	
 		
@@ -100,13 +104,9 @@ public class Stock {
 		return trader;
 	}
 
-
-
 	public void setTrader(Trader trader) {
 		this.trader = trader;
 	}
-
-
 
 	public void setId(long id) {
 		this.id = id;
@@ -128,6 +128,10 @@ public class Stock {
 		this.products = products;
 	}
 
+
+
+		
+	
 		
 	
 }
