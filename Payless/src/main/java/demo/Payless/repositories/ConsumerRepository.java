@@ -11,7 +11,7 @@ import demo.Payless.model.Purchase;
 
 @Repository
 @Transactional
-public interface ConsumerRepository  extends UserBaseRepository<Consumer>{
+public interface ConsumerRepository  extends BaseUserRepository<Consumer>{
 
 	/*CONSULTAS PROPIEDADES*/
 	List<Consumer> findByDni(int dni);

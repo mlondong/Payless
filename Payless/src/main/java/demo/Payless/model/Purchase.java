@@ -1,13 +1,9 @@
 package demo.Payless.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +22,7 @@ public class Purchase {
 
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="PURCHASE_ID")
 	private long id;
 
@@ -38,16 +34,28 @@ public class Purchase {
 	private long numInvoice;
 
 
-	/*MAPEO de PRODUCT CON TABLA INTERMEDIA*/
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+	/*MAPEO de PRODUCT CON TABLA INTERMEDIA PURCHASE_PRODUCT, PERO ESTA ESTRATEGIA SOLO FUNCIONA CON UN SOLO PRODUCTO SIN REPETIR POR CADA
+	 * PURCHASE ES DECIR UN CLIENTE PUEDE TENER MUCHAS COMPRAS PERO EN CADA COMPRA NO PODRA REPETIR PRODUCTOS LO CUAL NO SIRVE*/
+	/*@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinTable(
 				name="PURCHASE_PRODUCT" , 
 				joinColumns=@JoinColumn(name="PURCHASE_ID"),
 				inverseJoinColumns=@JoinColumn(name="PRODUCT_ID") 
 			  )
-	private Collection<Product> products;
+	private Collection<Product> products;*/
+	
+	/*
+	@OneToMany(mappedBy="purchase", 
+			   cascade=CascadeType.ALL,
+			   orphanRemoval=true)
+	private Collection<PurchaseProducts> purchasesprod;
+	*/
 
-
+	/*@OneToOne(fetch = FetchType.LAZY,orphanRemoval=true,optional=false)
+	@JoinColumn(name = "USER_ID")	
+	private Consumer consumer;
+	*/
+	
 	//@OneToOne(fetch = FetchType.LAZY)
 	//private DetailPurchase detailPurchase;
 
@@ -57,34 +65,42 @@ public class Purchase {
 	public Purchase(){	}
 
 	public Purchase(Date date, long numInv){
-		products =new ArrayList<Product>();;
+		//this.purchasesprod = new ArrayList<PurchaseProducts>();
 		this.dateCreation=date;
 		this.numInvoice=numInv;
 	}
 
 	/***************************************************************************************************************************************/	
-
+	/*metodos operacionales*/
+	
+	/*ESTE METODO REEMPLAZA A LA COLLECION DE StockProducts EN LA CLASE PRODUCT,  DEJANDOLO SINGLE SIDE BIDIRECCIONAL, asi mismo
+	 * USA EL METODO REMOVE ABAJO DESCRITO PARA REMOVER LOS STOCKPRODUCTS CON SU PRODUCTO ejemplo tomado de
+	 * https://vladmihalcea.com/the-best-way-to-map-a-many-to-many-association-with-extra-columns-when-using-jpa-and-hibernate/*/
+	
+	/*public void addProduct(Product product, int quantity){
+		PurchaseProducts pprod = new PurchaseProducts(this,product, quantity);
+		purchasesprod.add(pprod);
+	}*/
+	
+	/*public void removeProduct(Product p){
+		 for (Iterator<PurchaseProducts> iterator = products.iterator(); iterator.hasNext(); ) {
+			 PurchaseProducts stockproducs = iterator.next();
+		 
+		        if (stockproducs.getProduct().equals(this) && stockproducs.getStock().equals(p)) {
+		            iterator.remove();
+		            stockproducs.setProduct(null);
+		            stockproducs.setStock(null);
+		        }
+		 }
+  
+	}
+	*/
 		
-	//METODOS OPERACIONALES
-	public void addProduct(Product p){
-		this.products.add(p);
-	}
-
-	public void removeProduct(Product p){
-		this.products.remove(p);
-	}
-
-
+	
+	
 	/***************************************************************************************************************************************/	
 	//SETTER AND GETTERS
-	public Collection<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(Collection<Product> products) {
-		this.products = products;
-	}
-
+	
 
 	public long getId() {
 		return id;
@@ -102,11 +118,18 @@ public class Purchase {
 		this.dateCreation = dateCreation;
 	}
 
-	@Override
-	public String toString() {
-		return "Purchase [id=" + id + ", dateCreation=" + dateCreation + ", numInvoice="
-				+ numInvoice + "]";
+	
+	public long getNumInvoice() {
+		return numInvoice;
 	}
+
+	public void setNumInvoice(long numInvoice) {
+		this.numInvoice = numInvoice;
+	}
+
+
+
+	
 
 
 

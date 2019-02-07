@@ -3,6 +3,7 @@ package demo.Payless.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,68 +22,63 @@ public class Trader extends Usser {
 
 	@Column(name="CUIT",nullable=false,updatable=true)
 	private long cuit;
-	
-	
+
+
 	@Column(name="SCORE",nullable=false,updatable=true)
 	private int score;
-	
+
 
 	/*SE CREA UN SOLO STOCK POR TRADER Y SE AGREGAR PRODUCTOS AL STOCK*/
 	@OneToOne(mappedBy="trader",
 			fetch=FetchType.LAZY,
 			cascade=CascadeType.ALL)
 	private Stock stock;
-	
-	
-	/*SE CREAN INVOICES CON UNA TABLA INTERMEDIA TRADER_INVOICE QUE CONTIENE MUCHOS TRADERS*/
-	@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
-	@JoinTable(
-			    name="TRADER_INVOICE", 
-				joinColumns=@JoinColumn(name="USER_ID"),
-				inverseJoinColumns=@JoinColumn(name="INVOICE_ID")
-			    )
-	private Collection<Invoice> invoices;
-	
+
+
+	/*MAPEO A MUCHAS DIRECCIONES*/
+	@Column(name="USER_ID")
+	@ElementCollection
+	private List<Address> address = new ArrayList<Address>();
 
 	
+	/*MAPEO BIDIRECCIONAL DE 1 TRADER A MUCHOS INVOICES*/
+	@OneToMany(mappedBy="trader", 
+			 fetch=FetchType.LAZY,
+			 cascade = CascadeType.ALL, 
+			 orphanRemoval = true)
+	private Collection<Invoice> invoice = new ArrayList<>();
 	
-	//@ElementCollection
-	//private Collection<Address> address;
-
 	
 	
 	
 	
+	/*******************************************************************************************************************************************/	
 	public Trader(){}
-	
+
+	public Trader(String _name, String _pass, long _cuit, List<Address> _address){
+		super(_name, _pass);
+		this.address=_address;
+		this.cuit=_cuit;
+	}
+
 	public Trader(String _name, String _pass, long _cuit){
 		super(_name, _pass);
-		invoices= new ArrayList<Invoice>();
 		this.cuit=_cuit;
-
 	}
-	
-	public Trader(String _name, String _pass, long _cuit, Collection<Address> address){
-		super(_name, _pass);
-	//	address= new ArrayList<Address>();
-		invoices= new ArrayList<Invoice>();
-		this.cuit=_cuit;
 
-		
-	}
-	
 	/*************************************************************************************************************************************/	
+
 	/*METODOS ADD REMOVE Y CREAATE STOCK EN TRADER*/
 	public void createStock(){
 		this.stock = new  Stock();
 		this.stock.setDateStock(new Date());
 		this.stock.setTrader(this);
 	}
-	
+
 	public void addStockProducts(Product p, int quantity){
 		this.stock.addProduct(p, quantity);
 	}
-	
+
 	public void removeStockProducts(Product p){
 		this.stock.removeProduct(p);
 	}
@@ -90,29 +86,52 @@ public class Trader extends Usser {
 	
 	
 	
-	/*METODOS DE ADD INVOIDE REMOVE INVOICE*/
-	
-	public void  addInvoice(Invoice i){
-		this.invoices.add(i);
+	/*METODOS PARA ADICIONAR ASDRESS A TRADER*/
+
+	public void addAddress(Address ad){
+		this.address.add(ad);
+	}
+
+	public void removeAddress(Address ad){
+		this.address.remove(ad);
+	}
+
+
+
+	/*METODOS PARA ADICIONAR INVOICES*/
+	public void addInvoice(Invoice i){
+		this.invoice.add(i);
 	}
 	
-	public void  removeInvoice(Invoice i){
-		this.invoices.remove(i);
+	public void removeInvoice(Invoice i){
+		this.invoice.remove(i);
 	}
 	
-	
-	
-	
-	
+
+
+
 	/*************************************************************************************************************************************/
-	/*metodos setter and getter*/
-	
-	
-	
-	
+	/*METODOS GETTER AND SETER*/
+
+	public Collection<Invoice> getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(Collection<Invoice> invoice) {
+		this.invoice = invoice;
+	}
+
 	public long getCuit() {
 		return cuit;
 	}
+	public List<Address> getAddress() {
+		return address;
+	}
+
+	public void setAddress(List<Address> address) {
+		this.address = address;
+	}
+
 	public Stock getStock() {
 		return stock;
 	}
@@ -131,22 +150,9 @@ public class Trader extends Usser {
 		this.score = score;
 	}
 
-	public Collection<Invoice> getInvoices() {
-		return invoices;
-	}
 
-	public void setInvoices(Collection<Invoice> invoices) {
-		this.invoices = invoices;
-	}
 
-	@Override
-	public String toString() {
-		return "Trader [cuit=" + cuit + ", score=" + score + ", stock=" + stock + ", Invoice" + invoices;
-				
-	}
 
-	
 
-	
-	
+
 }

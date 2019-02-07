@@ -12,7 +12,7 @@ import demo.Payless.model.Stock;
 
 @Repository
 @Transactional
-public interface TraderRepository extends UserBaseRepository<Trader>{
+public interface TraderRepository extends BaseUserRepository<Trader>{
 
 	List<Consumer> findByCuit(int dni);
 	List<Trader> findByStock(Stock stock);

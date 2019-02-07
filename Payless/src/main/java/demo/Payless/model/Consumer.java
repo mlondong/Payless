@@ -2,6 +2,7 @@ package demo.Payless.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,20 +31,18 @@ public class Consumer extends Usser {
 	private String lastName;
 	
 	
-	/*MAPEO DE PURCHASE EN CONSUMER*/
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+	/*MAPEO DE PURCHASE EN CONSUMER DE 1 A MUCHOS*/
+/*	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinTable(
 			name="CONSUMER_PURCHASE" , 
 			joinColumns=@JoinColumn(name="USER_ID"),
 			inverseJoinColumns=@JoinColumn(name="PURCHASE_ID") 
 			)
 	private Collection<Purchase> purchase;
+*/
+	
+	
 
-	
-	
-	//@Embedded
-	//private FamillyShopingBasket familyBasket;
-	
 	
 	
 	
@@ -55,7 +54,7 @@ public class Consumer extends Usser {
 	
 	public Consumer(String _name, String _pass, long _dni, String _firstName, String _lastName  ){
 		super(_name, _pass);
-		purchase = new ArrayList<Purchase>();
+		//purchase = new ArrayList<Purchase>();
 		this.dni=_dni;
 		this.firstName=_firstName;
 		this.lastName=_lastName;
@@ -66,13 +65,12 @@ public class Consumer extends Usser {
 	//ANOTHER OPERATIONS
 	
 	
-	public void addProduct(Product p){
-	//	this.purchase.addProduct(p);
-	}
+	/*public boolean findPurchase(Purchase compra){
+		return this.getPurchase().contains(compra);	
+	}*/
+
 	
-	public void removeProduct(Product p){
-		//this.purchase.removeProduct(p);
-	}
+	
 	
 	
 	/***************************************************************************************************************************************/
@@ -80,12 +78,12 @@ public class Consumer extends Usser {
 	//Metodos Gter and Setter
 	
 	
-	public Collection<Purchase> getPurchase() {
-		return purchase;
-	}
+	//public Collection<Purchase> getPurchase() {
+	//	return purchase;
+	//}
 
 	public void setPurchase(Collection<Purchase> purchase) {
-		this.purchase = purchase;
+	//	this.purchase = purchase;
 	}
 
 	
@@ -109,13 +107,14 @@ public class Consumer extends Usser {
 		this.lastName = lastName;
 	}
 
+	@Override
+	public String toString() {
+		return "Consumer [dni=" + dni + ", firstName=" + firstName + ", lastName=" + lastName; 
+	}
+
 	
 	
 
-	@Override
-	public String toString() {
-		return "Consumer [dni=" + dni + ", firstName=" + firstName + ", lastName=" + lastName + "]";
-	}
 	
 
 

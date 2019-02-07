@@ -75,7 +75,7 @@
 
 	<!-- ENABLE JPA REPOSITORIES -->
 	<context:component-scan base-package="demo.Payless.repositories" /> <!-- ESTO ES NECESARIOEN LA CONF PARA LA ENTITYS NO ESTOY SEGURO SI DEBA IR A LAS CONF DE XML -->
-	<jpa:repositories base-package="demo.Payless.repositories" /> <!--ESTE SCANEA ALL REPOSITORIES @REPOSITORY  -->
+	<jpa:repositories base-package="demo.Payless.repositories" /> <!--ESTE SCANEA ALL REPOSITORIES @REPOSITORY y los habilita  -->
 	<tx:annotation-driven/>  <!--ESTE ACTIVA LAS TRANSACCIONES @TRANSACCIONAL  -->
 	<!--	<context:annotation-config />  -->
 

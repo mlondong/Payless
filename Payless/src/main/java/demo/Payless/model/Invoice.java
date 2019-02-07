@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
@@ -37,60 +38,68 @@ public class Invoice {
 	@Column(name="INVOICE_ID",nullable=false, unique=true)
 	private long id;
 
-	
-	
 	@Temporal(TemporalType.DATE)
 	@Column(name="DATE_INVOICE",nullable=false )
 	private Date dateInvoice;
 
-	
-	
-	/*MAPEO POR JOIN TABLE ,CREANDO TABLA INTERMMEDA DE IDS DE AMBAS TABAS TABLA GENERADA INVOICE_PRODUCTS*/
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true,fetch=FetchType.LAZY)
-	@JoinTable(
-				name = "INVOICE_PRODUCTS",
-				joinColumns = @JoinColumn(name = "INVOICE_ID"),
-				inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID")
-			   )
-	private Collection<Product> products;
+
+	/*MAPEO BIDIRECCIONAL DE MUCHOS INVOICES A 1 TRADER*/
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "USER_ID")
+	private Trader trader;
 
 	
+	
+	/*MAPEO BIDIRECCIONAL HACIA PRODUCTOS DADO QUE MUCHOS INVOICES PUEDEN 
+	 * TENER MUCHOS PRODCTOS Y MUCHOS PRODUCTOS PUEDEN ESTAR EN MCUHOS INVOICES DE DIFERENTES TRADER*/
+	@OneToMany(mappedBy="invoice",cascade= CascadeType.ALL, orphanRemoval=true)
+	private Collection<InvoiceProduct> products;
+	
+	
+	
+	
+	
+	
+	
+
 	
 	public Invoice(){
-		this.products = new ArrayList<Product>();
-	}
-
-
-	/****************************************************************************************************************************/
-	
-	/*Metodos para adicionar o remover products de un invoice*/
-	public void addProduct(Product product) {
-		this.products.add(product);
-	}
-
-	public void removeProduct(Product product) {
-		this.products.remove(product);
+		this.dateInvoice=new Date();
+		this.products= new ArrayList<InvoiceProduct>();
 	}
 	
+	/************************************************************************************************************************************/
+	/* DESDE ACA SE van ADICIONANDO OBJETOS InvoiceProduct A LOS CUALES SE LES AGREGA PRODUCTOS
+	 * ES DECIR CADA invoideProducts COMO ENTIDAD CONTIENE UN INVOICE+PRODUCTO+CANTIDAD 
+	 * SACADO DEL EJEMPLO DE HIBERNATE*
+	 * https://vladmihalcea.com/the-best-way-to-map-a-many-to-many-association-with-extra-columns-when-using-jpa-and-hibernate/*/
 	
-	public Collection<Product> getProducts() {
-		return products;
+	public void addInvoiceProduct(Product p, int quantity){
+		InvoiceProduct invoideProducts = new InvoiceProduct(this, p, quantity);
+		products.add(invoideProducts);
 	}
-
-	public void setProducts(Collection<Product> products) {
-		this.products = products;
-	}
-
-	public Date getDateInvoice() {
-		return dateInvoice;
-	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public long getId() {
 		return id;
 	}
 
+
 	public void setId(long id) {
 		this.id = id;
+	}
+
+
+	public Date getDateInvoice() {
+		return dateInvoice;
 	}
 
 
@@ -99,8 +108,29 @@ public class Invoice {
 	}
 
 
+	public Trader getTrader() {
+		return trader;
+	}
+
+
+	public void setTrader(Trader trader) {
+		this.trader = trader;
+	}
+
+	public Collection<InvoiceProduct> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Collection<InvoiceProduct> products) {
+		this.products = products;
+	}
+
 	
 
+
+
+	
+	
 }
 
 

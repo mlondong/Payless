@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
-@Service("TraderService")
+@Service
 public class TraderService {
 
-	@Autowired
+	@Autowired(required=true)
 	private TraderRepository traderRepo;
 
 	@Transactional

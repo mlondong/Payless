@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
@@ -18,8 +21,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+
 
 /**
  * @author root 
@@ -43,6 +49,7 @@ public class Stock {
 	private Date dateStock;
 	
 	
+	/*ESTA ES UNA ESTRATEGIA DE MANY TO MANY  PARTIR DE UN OBJETO STOCKPRODUCID QUECONTINE AMBOS IDS DE STOCK Y DE PRODUCTS*/
 	@OneToMany(mappedBy="stock", 
 			   cascade=CascadeType.ALL,
 			   orphanRemoval=true)
@@ -128,6 +135,9 @@ public class Stock {
 		this.products = products;
 	}
 
+
+
+	
 
 
 		

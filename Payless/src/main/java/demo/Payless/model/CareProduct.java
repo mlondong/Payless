@@ -12,4 +12,5 @@ public class CareProduct extends Product{
 		// TODO Auto-generated constructor stub
 	}
 
+	
 }

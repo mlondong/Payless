@@ -25,7 +25,6 @@ import demo.Payless.model.Trader;
 import demo.Payless.model.Usser;
 import demo.Payless.repositories.ConsumerRepository;
 import demo.Payless.repositories.TraderRepository;
-import demo.Payless.repositories.UserBaseRepository;
 import demo.Payless.repositories.UsserRepository;
 
 @Configuration
