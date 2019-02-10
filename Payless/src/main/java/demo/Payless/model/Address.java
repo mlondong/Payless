@@ -10,10 +10,10 @@ public class Address {
 	@Column(name="DESCRIPTION")
 	private String description;
 	
-	@Column(name="CITY_ID")
+	@Column(name="CITY_ID",nullable=false)
 	private int city;
 
-	@Column(name="ZONE")
+	@Column(name="ZONE",nullable=false)
 	private int zona;
 
 	

@@ -1,9 +1,13 @@
 package demo.Payless.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,69 +37,59 @@ public class Purchase {
 	@Column(name="NUM_INVOICE")
 	private long numInvoice;
 
-
-	/*MAPEO de PRODUCT CON TABLA INTERMEDIA PURCHASE_PRODUCT, PERO ESTA ESTRATEGIA SOLO FUNCIONA CON UN SOLO PRODUCTO SIN REPETIR POR CADA
-	 * PURCHASE ES DECIR UN CLIENTE PUEDE TENER MUCHAS COMPRAS PERO EN CADA COMPRA NO PODRA REPETIR PRODUCTOS LO CUAL NO SIRVE*/
-	/*@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
-	@JoinTable(
-				name="PURCHASE_PRODUCT" , 
-				joinColumns=@JoinColumn(name="PURCHASE_ID"),
-				inverseJoinColumns=@JoinColumn(name="PRODUCT_ID") 
-			  )
-	private Collection<Product> products;*/
 	
-	/*
-	@OneToMany(mappedBy="purchase", 
-			   cascade=CascadeType.ALL,
-			   orphanRemoval=true)
-	private Collection<PurchaseProducts> purchasesprod;
-	*/
-
-	/*@OneToOne(fetch = FetchType.LAZY,orphanRemoval=true,optional=false)
+	/*MAPEO DE MUCHOS PURCHASE HAVE ONE CONSUMER, con la VARIABLE CONSUMER MAPPEDBY="CONSUMER" DESDE CONSUMER*/
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "USER_ID")	
 	private Consumer consumer;
-	*/
 	
-	//@OneToOne(fetch = FetchType.LAZY)
-	//private DetailPurchase detailPurchase;
-
-
-
-
-	public Purchase(){	}
-
-	public Purchase(Date date, long numInv){
-		//this.purchasesprod = new ArrayList<PurchaseProducts>();
-		this.dateCreation=date;
-		this.numInvoice=numInv;
-	}
-
-	/***************************************************************************************************************************************/	
-	/*metodos operacionales*/
 	
-	/*ESTE METODO REEMPLAZA A LA COLLECION DE StockProducts EN LA CLASE PRODUCT,  DEJANDOLO SINGLE SIDE BIDIRECCIONAL, asi mismo
-	 * USA EL METODO REMOVE ABAJO DESCRITO PARA REMOVER LOS STOCKPRODUCTS CON SU PRODUCTO ejemplo tomado de
-	 * https://vladmihalcea.com/the-best-way-to-map-a-many-to-many-association-with-extra-columns-when-using-jpa-and-hibernate/*/
 	
-	/*public void addProduct(Product product, int quantity){
-		PurchaseProducts pprod = new PurchaseProducts(this,product, quantity);
-		purchasesprod.add(pprod);
-	}*/
 	
-	/*public void removeProduct(Product p){
-		 for (Iterator<PurchaseProducts> iterator = products.iterator(); iterator.hasNext(); ) {
-			 PurchaseProducts stockproducs = iterator.next();
-		 
-		        if (stockproducs.getProduct().equals(this) && stockproducs.getStock().equals(p)) {
-		            iterator.remove();
-		            stockproducs.setProduct(null);
-		            stockproducs.setStock(null);
-		        }
-		 }
-  
-	}
-	*/
+	/*MAPEO DE PURCHASE A PRODUCT A TRAVES DE PURCHASEPRODUCT Y PURCHASEID*/
+	@OneToMany(mappedBy="purchase",  cascade=CascadeType.ALL,  orphanRemoval=true)
+	private Collection<PurchaseProduct> purchaseproduct; 
+	
+
+
+	public Purchase(){}
 		
+	
+	
+	public Purchase(){
+		this.dateCreation= new Date();
+		this.purchaseproduct = new ArrayList<PurchaseProduct>();
+		this.generateNumInvoice();
+	}
+
+
+	
+	/***************************************************************************************************************************************/	
+	
+	public void addProductInPurchaseProduct( Product prod, int q){
+		/*SE VAN GENERARNDO PurchaseProduct CON PRODUCTO +CANTIDAD */
+		PurchaseProduct p = new PurchaseProduct(this, prod, q);
+		this.purchaseproduct.add(p);
+	}
+	
+	
+	
+	
+	
+	public void generateNumInvoice(){
+		int max=10000;
+		int min=1;
+		this.numInvoice= (long) (Math.random() * ( max - min ));
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/***************************************************************************************************************************************/	
@@ -125,6 +119,26 @@ public class Purchase {
 
 	public void setNumInvoice(long numInvoice) {
 		this.numInvoice = numInvoice;
+	}
+
+	public Consumer getConsumer() {
+		return consumer;
+	}
+
+	public void setConsumer(Consumer consumer) {
+		this.consumer = consumer;
+	}
+
+
+
+
+
+	public Collection<PurchaseProduct> getPurchaseproduct() {
+		return purchaseproduct;
+	}
+
+	public void setPurchaseproduct(Collection<PurchaseProduct> purchaseproduct) {
+		this.purchaseproduct = purchaseproduct;
 	}
 
 

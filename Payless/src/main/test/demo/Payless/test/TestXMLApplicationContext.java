@@ -51,7 +51,7 @@ public class TestXMLApplicationContext {
 			
 			Trader us = (Trader)bean.findUser(1L);
 			Stock st = us.getStock();
-			Collection<Invoice> in = us.getInvoices();
+			Collection<Invoice> in = us.getInvoice();
 			
 			
 			System.out.println("Stock " + st.getId());

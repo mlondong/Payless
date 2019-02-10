@@ -83,4 +83,7 @@
 	<!-- Llamado de los beans -->
 	<bean id="mainBean" class="demo.Payless.test.TestXMLApplicationContext" />
 
+
+
+
 </beans>

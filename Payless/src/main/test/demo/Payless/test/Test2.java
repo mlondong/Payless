@@ -2,6 +2,7 @@ package demo.Payless.test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,7 +13,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import demo.Payless.dao.AbstractDAO;
+import demo.Payless.model.CareProduct;
 import demo.Payless.model.Consumer;
+import demo.Payless.model.MeatProduct;
 import demo.Payless.model.MilkProduct;
 import demo.Payless.model.Trader;
 
@@ -45,6 +48,37 @@ public class Test2 {
 
 	}
 
+
+	public static void testProduct(){
+
+		/*TEST ALMACENAMIENTO DE PRODUCTOS Y SUS TIPOS */
+		//test con hibernate.cfg
+
+
+		MeatProduct mp1 = new MeatProduct("MPJU123", "Carne de vaca", "Angus",  10, "Vaca", new Date() );
+		MilkProduct mp2 =  new MilkProduct("MP23", "Leche Entera", "Celema",  50 );
+		MeatProduct mp3 = new MeatProduct("MPAA123", "Carne de vaca", "Angus",  10, "Vaca", new Date() );
+		MeatProduct mp4 = new MeatProduct("MPCP121", "Carne de vaca", "Brangus",  10, "Vaca", new Date() );
+		MeatProduct mp5 = new MeatProduct("MP1212", "Carne de Pollo", "Pollo",  10, "Pollo", new Date() );
+
+
+
+		AbstractDAO.almacenaEntidad(mp1);
+		AbstractDAO.almacenaEntidad(mp2);
+		AbstractDAO.almacenaEntidad(mp3);
+		AbstractDAO.almacenaEntidad(mp4);
+		AbstractDAO.almacenaEntidad(mp5);
+
+
+		CareProduct cp = new CareProduct("CPJU123", "Jabon de bano", "Dove",  50);
+		AbstractDAO.almacenaEntidad(cp);
+
+
+		MilkProduct m =  new MilkProduct("MP23", "Leche Entera", "Celema",  50);
+		AbstractDAO.almacenaEntidad(m);
+
+
+	}
 
 
 	
